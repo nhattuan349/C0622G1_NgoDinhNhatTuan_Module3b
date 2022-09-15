@@ -34,19 +34,22 @@ order by so_lan_dat_phong;
 -- cho tất cả các khách hàng đã từng đặt phòng.
 -- (những khách hàng nào chưa từng đặt phòng cũng phải hiển thị ra).
 
-select kh.ma_khach_hang, kh.ho_ten, lk.ten_loai_khach, hd.ma_hop_dong, dv.ten_dich_vu, hd.ngay_lam_hop_dong,hd.ngay_ket_thuc,
- ifnull(chi_phi_thue,0)+ifnull(so_luong*gia,0) as tong_tien
- from khach_hang kh
- left join loai_khach lk on kh.ma_loai_khach = lk.ma_loai_khach
- left join hop_dong hd on kh.ma_khach_hang = hd.ma_khach_hang
- left join dich_vu dv on hd.ma_dich_vu = dv.ma_dich_vu
- left join hop_dong_chi_tiet hdct on hd.ma_hop_dong = hdct.ma_hop_dong
- left join dich_vu_di_kem dvdk on hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
- group by kh.ma_khach_hang;	
+select kh.ma_khach_hang, kh.ho_ten, lk.ten_loai_khach,
+hd.ma_hop_dong,dv.ten_dich_vu,hd.ngay_lam_hop_dong,hd.ngay_ket_thuc,
+ifnull(dv.chi_phi_thue,0)+ifnull(hdct.so_luong*dvdk.gia,0) as tong_tien
+from loai_khach lk
+left join khach_hang kh on kh.ma_loai_khach = lk.ma_loai_khach
+left join hop_dong hd on hd.ma_khach_hang = kh.ma_khach_hang
+left join dich_vu dv on dv.ma_dich_vu = hd.ma_dich_vu
+left join hop_dong_chi_tiet hdct on hdct.ma_hop_dong = hd.ma_hop_dong
+left join dich_vu_di_kem dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
+group by hd.ma_hop_dong
+order by kh.ma_khach_hang;
  
 -- 6.	Hiển thị ma_dich_vu, ten_dich_vu, dien_tich, chi_phi_thue,
 -- ten_loai_dich_vu của tất cả các loại dịch vụ chưa từng được khách hàng thực hiện
 -- đặt từ quý 1 của năm 2021 (Quý 1 là tháng 1, 2, 3).
+
 
 select dv.ma_dich_vu, dv.ten_dich_vu, dv.dien_tich, dv.chi_phi_thue, ldv.ten_loai_dich_vu
 from dich_vu dv
@@ -118,6 +121,29 @@ left join dich_vu_di_kem dvdk on hdct.ma_dich_vu_di_kem =  dvdk.ma_dich_vu_di_ke
 group by ma_hop_dong
 order by so_luong_dich_vu_di_kem desc;
 
+-- 11.	Hiển thị thông tin các dịch vụ đi kèm đã được sử dụng bởi những khách hàng có ten_loai_khach là “Diamond” 
+-- và có dia_chi ở “Vinh” hoặc “Quảng Ngãi”.
+select dvdk.ma_dich_vu_di_kem, dvdk.ten_dich_vu_di_kem, lk.ten_loai_khach, kh.dia_chi
+from dich_vu_di_kem dvdk 
+join hop_dong_chi_tiet hdct on hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
+join hop_dong hd on hd.ma_hop_dong = hdct.ma_hop_dong
+join khach_hang kh on kh.ma_khach_hang = hd.ma_khach_hang
+join loai_khach lk on lk.ma_loai_khach = kh.ma_loai_khach
+where lk.ten_loai_khach like 'Diamond' and  (kh.dia_chi like 'Vinh' or kh.dia_chi like 'Quảng Ngãi');
 
 
+
+-- 12.	Hiển thị thông tin ma_hop_dong, ho_ten (nhân viên), ho_ten (khách hàng), so_dien_thoai (khách hàng), 
+-- ten_dich_vu, so_luong_dich_vu_di_kem (được tính dựa trên việc sum so_luong ở dich_vu_di_kem),
+--  tien_dat_coc của tất cả các dịch vụ đã từng được khách hàng đặt vào 3 tháng cuối năm 2020
+-- nhưng chưa từng được khách hàng đặt vào 6 tháng đầu năm 2021.
+
+select hd.ma_hop_dong,nv.ho_ten,kh.ho_ten,kh.so_dien_thoai,dv.ten_dich_vu, sum(hdct.so_luong) as so_luong_dich_vu_di_kem
+from hop_dong hd
+join khach_hang kh on kh.ma_khach_hang = hd.ma_khach_hang
+left join hop_dong_chi_tiet hdct on hdct.ma_hop_dong = hd.ma_hop_dong
+left join nhan_vien nv on nv.ma_nhan_vien = hd.ma_nhan_vien
+join dich_vu dv on hd.ma_dich_vu = dv.ma_dich_vu
+where (month(hd.ngay_lam_hop_dong ) between 10 and 12) and year(hd.ngay_lam_hop_dong) = 2020
+group by hd.ma_hop_dong;
 
