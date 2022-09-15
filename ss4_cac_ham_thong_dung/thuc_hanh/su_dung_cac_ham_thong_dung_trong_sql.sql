@@ -2,7 +2,6 @@ drop database if exists ss4_quan_ly_sinh_vien;
 create database ss4_quan_ly_sinh_vien;
 use ss4_quan_ly_sinh_vien;
 
-
 CREATE TABLE Class
 (
     ClassID   INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
