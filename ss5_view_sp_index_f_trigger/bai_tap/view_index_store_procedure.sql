@@ -13,12 +13,12 @@ productStatus bit(1)
 );
 
 insert into Products(id,productCode,productName,productPrice,productAmount,productDescription,productStatus)
-values ('1',011,'Quản Lý A',1000,54,'Ngon',1),
-('2',022,'Quản Lý B',2000,32,'Kha Ngon',1),
-('3',033,'Quản Lý C',3000,57,'Rat Ngon',1),
-('4',044,'Quản Lý D',4000,18,'Me',0),
-('5',055,'Quản LýE',5000,2,'Binh thuong',1),
-('6',066,'Quản LýF',6000,78,'Hap dan',0);
+values ('1',011,'Món A',1000,54,'Ngon',1),
+('2',022,'Món B',2000,32,'Kha Ngon',1),
+('3',033,'Món C',3000,57,'Rat Ngon',1),
+('4',044,'Món D',4000,18,'Me',0),
+('5',055,'Món E',5000,2,'Binh thuong',1),
+('6',066,'Món F',6000,78,'Hap dan',0);
 
 
 -- Bước 3:
