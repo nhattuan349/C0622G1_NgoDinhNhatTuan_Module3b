@@ -184,6 +184,56 @@ join bo_phan bp on bp.ma_bo_phan = nv.ma_bo_phan
 group by nv.ma_nhan_vien
 having count(hd.ma_hop_dong) <=3;
 
+ -- task 16 Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2019 đến năm 2021.
+ 
+ update nhan_vien nv set status_delete = 0
+ where nv.ma_nhan_vien in (
+ select * 
+ from (select nv.ma_nhan_vien from hop_dong hd
+ right join nhan_vien nv on hd.ma_nhan_vien = nv.ma_nhan_vien
+ right join trinh_do td on nv.ma_trinh_do = td.ma_trinh_do
+ right join bo_phan bp on nv.ma_trinh_do = bp.ma_bo_phan
+ group by ma_nhan_vien
+ having count(hd.ma_hop_dong) = 0) as temp);
+ select * from nhan_vien;
 
+-- task 17 Cập nhật thông tin những khách hàng có ten_loai_khach từ Platinum lên Diamond,
+-- chỉ cập nhật những khách hàng đã từng đặt phòng với Tổng Tiền thanh toán trong năm 2021 là lớn hơn 10.000.000 VNĐ.
+update khach_hang kh set kh.ma_loai_khach=1
+where kh.ma_khach_hang in(
+select*from (
+select kh.ma_khach_hang
+from khach_hang kh 
+left join loai_khach lk on kh.ma_loai_khach = lk.ma_loai_khach
+left join hop_dong hd on kh.ma_khach_hang = hd.ma_khach_hang
+left join dich_vu dv on hd.ma_dich_vu = dv .ma_dich_vu
+left join hop_dong_chi_tiet hdct on hd.ma_hop_dong = hdct.ma_hop_dong
+left join dich_vu_di_kem dvdk on hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
+where year(ngay_ket_thuc)= 2021 and ifnull(dv.chi_phi_thue,0) + ifnull(hdct.so_luong*dvdk.gia,0)>10000000
+group by kh.ma_khach_hang having kh.ma_khach_hang = 2) as temp);
+select * from khach_hang;
 
+-- task 18 Xóa những khách hàng có hợp đồng trước năm 2021 (chú ý ràng buộc giữa các bảng).
+update khach_hang kh set status_delete = 0
+where kh.ma_khach_hang in(
+select*from(
+select kh.ma_khach_hang  from khach_hang kh
+join hop_dong hd on kh.ma_khach_hang= hd.ma_hop_dong
+where year(ngay_lam_hop_dong)<2021) temp);	
 
+-- task  19 Cập nhật giá cho các dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2020 lên gấp đôi.
+update dich_vu_di_kem dvdk set dvdk.gia=dvdk.gia*2
+where dvdk.ma_dich_vu_di_kem in(
+select *
+from(
+select dvdk.ma_dich_vu_di_kem
+ from hop_dong hd
+ join hop_dong_chi_tiet hdct on hd.ma_hop_dong = hdct.ma_hop_dong
+ join dich_vu_di_kem dvdk on hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem
+ where hdct.so_luong >10 and year(ngay_lam_hop_dong)=2020 )temp);
+
+-- task 20 	Hiển thị thông tin của tất cả các nhân viên và khách hàng có trong hệ thống, thông tin hiển thị bao gồm id 
+-- (ma_nhan_vien, ma_khach_hang), ho_ten, email, so_dien_thoai, ngay_sinh, dia_chi.
+select ma_nhan_vien,nv.ho_ten,nv.email,nv.so_dien_thoai,nv.ngay_sinh,nv.dia_chi from nhan_vien nv
+union 
+select ma_khach_hang,kh.ho_ten,kh.email,kh.so_dien_thoai,kh.ngay_sinh,kh.dia_chi from khach_hang kh;

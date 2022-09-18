@@ -31,7 +31,8 @@ FOREIGN KEY (ma_vi_tri) REFERENCES vi_tri(ma_vi_tri),
 ma_trinh_do int,
 FOREIGN KEY (ma_trinh_do) REFERENCES trinh_do(ma_trinh_do),
 ma_bo_phan int,
-FOREIGN KEY (ma_bo_phan) REFERENCES bo_phan(ma_bo_phan)
+FOREIGN KEY (ma_bo_phan) REFERENCES bo_phan(ma_bo_phan),
+status_delete bit(1) default 1
 );
 
 create table loai_khach(
@@ -49,7 +50,8 @@ gioi_tinh bit(1),
 so_cmnd varchar(45),
 so_dien_thoai varchar(45),
 email varchar(45),
-dia_chi varchar(45)
+dia_chi varchar(45),
+status_delete bit(1) default 1
 );
 
 create table loai_dich_vu(
