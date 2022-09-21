@@ -14,7 +14,6 @@ where (round(datediff(curdate(),ngay_sinh)/365,0)>=18
 and round(datediff(curdate(),ngay_sinh)/365,0)<=50
 and dia_chi like "%Đà Nẵng" or dia_chi like "%Quảng Trị");
 
-
 -- 4.	Đếm xem tương ứng với mỗi khách hàng đã từng đặt phòng bao nhiêu lần.
 -- Kết quả hiển thị được sắp xếp tăng dần theo số lần đặt phòng của khách hàng.
 -- Chỉ đếm những khách hàng nào có Tên loại khách hàng là “Diamond”.
@@ -96,7 +95,6 @@ group by ho_ten;
 select ho_ten from khach_hang
 union
 select ho_ten from khach_hang;
-
 
 /*
 task 9.	Thực hiện thống kê doanh thu theo tháng, 
@@ -218,8 +216,10 @@ update khach_hang kh set status_delete = 0
 where kh.ma_khach_hang in(
 select*from(
 select kh.ma_khach_hang  from khach_hang kh
-join hop_dong hd on kh.ma_khach_hang= hd.ma_hop_dong
+join hop_dong hd on kh.ma_khach_hang= hd.ma_khach_hang
 where year(ngay_lam_hop_dong)<2021) temp);	
+select * from khach_hang
+where status_delete = 0;
 
 -- task  19 Cập nhật giá cho các dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2020 lên gấp đôi.
 update dich_vu_di_kem dvdk set dvdk.gia=dvdk.gia*2

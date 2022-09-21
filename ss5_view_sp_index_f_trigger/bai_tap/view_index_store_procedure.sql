@@ -98,6 +98,7 @@ delimiter ;
 call update_Products();
 
 -- Tạo store procedure xoá sản phẩm theo id
+
 delimiter //
 create procedure delete_Products(in id_Poducts int)
 begin

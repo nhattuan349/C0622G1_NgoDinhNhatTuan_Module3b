@@ -1,0 +1,25 @@
+body{
+    text-align: justify;
+    font-family: "Segoe UI";
+}
+
+p{
+    width: 792px;
+}
+
+p a {
+    text-decoration: none;
+}
+
+p sup{
+    font-size: 50%;
+}
+
+.span1 {
+    color: blue;
+    font-size: 75%;
+}
+
+.thutdong{
+    text-indent: 40px;
+}
