@@ -40,7 +40,7 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public void edit(int id, Product product) {
-
+        productList.put(id, product);
     }
 
     @Override
@@ -55,6 +55,6 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public Product findById(int id) {
-        return null;
+        return productList.get(id);
     }
 }

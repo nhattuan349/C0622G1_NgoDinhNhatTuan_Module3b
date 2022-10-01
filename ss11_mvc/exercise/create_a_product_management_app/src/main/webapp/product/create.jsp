@@ -14,7 +14,6 @@
 <body>
 <h1> Trang thêm mới</h1>
 
-
 <a href="/product">Quay lại trang list</a>
 
 <p><c:if test="${mess!=null}">

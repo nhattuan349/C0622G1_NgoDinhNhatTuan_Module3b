@@ -36,7 +36,8 @@
             <td>${product.getPrice()}</td>
             <td>${product.getAmount()}</td>
             <td>${product.getProduction()}</td>
-            <td><button class="btn btn-primary">Edit</button></td>
+            <td><a href="/product?action=edit&id=${product.getId()}">Sửa</a></td>
+<%--            <td><button class="btn btn-primary"><a href="/product?action&id=${product.getId()}">Edit</a></button></td>--%>
             <td><button class="btn btn-danger">Delete</button></td>
         </tr>
     </c:forEach>
