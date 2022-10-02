@@ -45,12 +45,18 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public void delete(int id) {
-
+        productList.remove(id);
     }
 
     @Override
     public List<Product> findByName(String name) {
-        return null;
+        List<Product> products = new ArrayList<>();
+        for (Product item : findAll()) {
+            if (item.getName().contains(name)) {
+                products.add(item);
+            }
+        }
+        return products;
     }
 
     @Override

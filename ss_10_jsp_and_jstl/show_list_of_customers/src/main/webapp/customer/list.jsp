@@ -9,7 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>$show list of customers$</title>
 </head>
 <body>
 <h1>Hiển thị danh sách khách hàng</h1>

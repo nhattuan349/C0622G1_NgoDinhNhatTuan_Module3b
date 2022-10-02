@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
     <title>Ứng dụng quản lý khách hàng</title>
@@ -18,6 +19,11 @@
     <li><a href="/product?action=create">Thêm mới</a></li>
 </ul>
 
+<form action="/product">
+    <input class="text-input-dialog" type="text" name="name">
+    <input class="btn button bg-primary" type="submit" name="action" value="findByName">
+</form>
+
 <table class="table table-dark">
     <tr>
         <th>STT</th>
@@ -27,6 +33,8 @@
         <th>Production</th>
         <th>Edit</th>
         <th>Delete</th>
+        <th>See details</th>
+
     </tr>
 
     <c:forEach var="product" items="${products}" varStatus="status">
@@ -38,7 +46,8 @@
             <td>${product.getProduction()}</td>
             <td><a href="/product?action=edit&id=${product.getId()}">Sửa</a></td>
 <%--            <td><button class="btn btn-primary"><a href="/product?action&id=${product.getId()}">Edit</a></button></td>--%>
-            <td><button class="btn btn-danger">Delete</button></td>
+            <td><a class="btn btn-danger" href="/product?action=delete&id=${product.getId()}">Delete</a></td>
+            <td><a class="btn btn-danger" href="/product?action=findById&id=${product.getId()}">See details</a></td>
         </tr>
     </c:forEach>
 </table>
