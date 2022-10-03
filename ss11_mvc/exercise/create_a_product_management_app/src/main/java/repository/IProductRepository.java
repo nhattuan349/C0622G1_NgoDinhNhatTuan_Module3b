@@ -17,4 +17,5 @@ public interface IProductRepository {
 
     Product findById(int id);
 
+    Integer checkId();
 }

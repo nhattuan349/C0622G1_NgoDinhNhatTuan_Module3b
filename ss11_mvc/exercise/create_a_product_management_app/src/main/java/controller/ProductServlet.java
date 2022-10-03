@@ -13,7 +13,7 @@ import java.util.List;
 @WebServlet(name = "ProductServlet", urlPatterns = "/product")
 public class ProductServlet extends HttpServlet {
 
-    IProductService productService = new ProductService();
+    private IProductService productService = new ProductService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,11 +36,11 @@ public class ProductServlet extends HttpServlet {
             case "findById":
                 SeeDetails(request, response);
             default:
-                showListProduct(request, response);
+                showByNameProduct(request, response);
+//                showListProduct(request, response);
                 break;
         }
     }
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
@@ -67,10 +67,10 @@ public class ProductServlet extends HttpServlet {
         if (product == null) {
             dispatcher = request.getRequestDispatcher("error-404.jsp");
         } else {
-            request.setAttribute("product",product);
+            request.setAttribute("product", product);
             dispatcher = request.getRequestDispatcher("/product/view.jsp");
             try {
-                dispatcher.forward(request,response);
+                dispatcher.forward(request, response);
             } catch (ServletException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -147,22 +147,21 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
-
     private void createProduct(HttpServletRequest request, HttpServletResponse response) {
+
+        int id =  productService.checkId();
         String name = request.getParameter("name");
         int price = Integer.parseInt(request.getParameter("price"));
         int amount = Integer.parseInt(request.getParameter("amount"));
         String production = request.getParameter("production");
-        int id = (int) (Math.random() * 10000);
+//        int id = (int) (Math.random() * 10000);
 
         Product product = new Product(id, name, price, amount, production);
 
         productService.create(product);
         request.setAttribute("mess", "Thêm mới thành công");
         showAddForm(request, response);
-
     }
-
 
     private void showAddForm(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -174,15 +173,15 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
-    private void showListProduct(HttpServletRequest request, HttpServletResponse response) {
-        List<Product> products = productService.findAll();
-        request.setAttribute("products", products);
-        try {
-            request.getRequestDispatcher("/product/list.jsp").forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void showListProduct(HttpServletRequest request, HttpServletResponse response) {
+//        List<Product> products = productService.findAll();
+//        request.setAttribute("products", products);
+//        try {
+//            request.getRequestDispatcher("/product/list.jsp").forward(request, response);
+//        } catch (ServletException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

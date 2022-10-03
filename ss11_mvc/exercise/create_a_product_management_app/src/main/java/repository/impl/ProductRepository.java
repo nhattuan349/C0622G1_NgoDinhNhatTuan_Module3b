@@ -28,6 +28,8 @@ public class ProductRepository implements IProductRepository {
         productList.put(product7.getId(), product7);
     }
 
+
+
     @Override
     public List<Product> findAll() {
         return new ArrayList<>(productList.values());
@@ -62,5 +64,16 @@ public class ProductRepository implements IProductRepository {
     @Override
     public Product findById(int id) {
         return productList.get(id);
+    }
+
+    @Override
+    public Integer checkId() {
+        int max = productList.get(0).getId();
+        for (int i = 1; i <productList.size() ; i++) {
+            if (max < productList.get(i).getId()) {
+                max = productList.get(i).getId();
+            }
+        }
+        return max + 1;
     }
 }

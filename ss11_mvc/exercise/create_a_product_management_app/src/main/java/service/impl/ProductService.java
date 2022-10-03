@@ -41,5 +41,10 @@ public class ProductService implements IProductService {
         return productRepository.findById(id);
     }
 
+    @Override
+    public Integer checkId() {
+       return productRepository.checkId();
+    }
+
 
 }
