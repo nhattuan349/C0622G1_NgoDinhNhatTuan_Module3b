@@ -29,8 +29,6 @@
             <td>${customer.getImg()}</td>
         </tr>
     </c:forEach>
-
-
 </table>
 </body>
 </html>
