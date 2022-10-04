@@ -109,6 +109,7 @@ public class UserDAO implements IUserDAO {
         Connection connection = BaseRepository.getConnectDB();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_FINDBYNAME_USERS);
+            preparedStatement.setString(1,userName);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");

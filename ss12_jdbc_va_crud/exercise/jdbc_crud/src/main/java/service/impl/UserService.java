@@ -37,6 +37,6 @@ public class UserService implements IUserService {
 
     @Override
     public List<User> findByName(String userName) {
-        return userDAO.findByName(userName);
+        return userDAO.findByName("%"+userName+"%");
     }
 }

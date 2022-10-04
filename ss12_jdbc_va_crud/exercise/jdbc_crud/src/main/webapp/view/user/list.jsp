@@ -10,6 +10,8 @@
     <h1>User Management</h1>
     <h2>
         <a href="/users?action=create">Add New User</a>
+        <link rel="stylesheet" href="../../bootstrap520/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../datatables/css/dataTables.bootstrap5.min.css">
     </h2>
 
     <form action="/users">
@@ -18,8 +20,9 @@
     </form>
 </center>
 <div align="center">
-    <table border="1" cellpadding="5">
-        <caption><h2>List of Users</h2></caption>
+    <table id="tableStudent" class="table table-striped table-bordered" style="width:100%">
+        <%--        <caption><h2>List of Users</h2></caption>--%>
+        <thead>
         <tr>
             <th>ID</th>
             <th>Name</th>
@@ -27,6 +30,8 @@
             <th>Country</th>
             <th>Actions</th>
         </tr>
+        </thead>
+        <tbody>
         <c:forEach var="user" items="${listUser}">
             <tr>
                 <td><c:out value="${user.id}"/></td>
@@ -39,7 +44,21 @@
                 </td>
             </tr>
         </c:forEach>
+        </tbody>
     </table>
 </div>
+<script src="../../jquery/jquery-3.5.1.min.js"></script>
+<script src="../../datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../datatables/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function (){
+        $("#tableStudent").dataTable({
+            "dom": "lrtrip",
+            "lengthChange": false,
+            "pageLength":2
+        })
+        }
+    )
+</script>
 </body>
 </html>
