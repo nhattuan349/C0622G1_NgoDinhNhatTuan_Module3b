@@ -2,13 +2,13 @@ package repository.impl;
 
 import model.User;
 import repository.BaseRepository;
-import repository.IUserDAO;
+import repository.IUserRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO implements IUserDAO {
+public class UserRepository implements IUserRepository {
 
     private static final String INSERT_USERS_SQL = "INSERT INTO users (name, email, country) VALUES (?, ?, ?);";
     private static final String SELECT_USER_BY_ID = "select id,name,email,country from users where id =?";
@@ -63,11 +63,6 @@ public class UserDAO implements IUserDAO {
         List<User> users = new ArrayList<>();
         // Step 1: Establishing a Connection
         try (Connection connection = BaseRepository.getConnectDB();
-
-             // Step 2:Create a statement using connection object
-//             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);) {
-//            // Step 3: Execute the query or update query
-//            ResultSet rs = preparedStatement.executeQuery();
             //Gọi    Stored Procedures từ JDBC sử dụng CallableStatement cho chức năng hiển thị danh sách users
             CallableStatement callableStatement = connection.prepareCall(SELECT_ALL_USERS_SP);){
             // Step 3: Execute the query or update query
@@ -87,13 +82,6 @@ public class UserDAO implements IUserDAO {
     }
 
     public boolean deleteUser(int id) throws SQLException {
-//        boolean rowDeleted;
-//        try (Connection connection = BaseRepository.getConnectDB();
-//             PreparedStatement statement = connection.prepareStatement(DELETE_USERS_SQL);) {
-//            statement.setInt(1, id);
-//            rowDeleted = statement.executeUpdate() > 0;
-//        }
-//        return rowDeleted;
         boolean rowDeleted;
         try (Connection connection = BaseRepository.getConnectDB();
              CallableStatement callableStatement = connection.prepareCall(DELETE_USERS_SQL_SP);) {
@@ -104,16 +92,6 @@ public class UserDAO implements IUserDAO {
     }
 
     public boolean updateUser(User user) throws SQLException {
-//        boolean rowUpdated;
-//        try (Connection connection = BaseRepository.getConnectDB();
-//             PreparedStatement statement = connection.prepareStatement(UPDATE_USERS_SQL);) {
-//            statement.setString(1, user.getName());
-//            statement.setString(2, user.getEmail());
-//            statement.setString(3, user.getCountry());
-//            statement.setInt(4, user.getId());
-//            rowUpdated = statement.executeUpdate() > 0;
-//        }
-//        return rowUpdated;
         boolean rowUpdated;
         try (Connection connection = BaseRepository.getConnectDB();
              CallableStatement callableStatement = connection.prepareCall(UPDATE_USERS_SQL_SP);) {

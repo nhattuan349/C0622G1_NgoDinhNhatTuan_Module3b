@@ -5,7 +5,7 @@ import model.User;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface IUserDAO {
+public interface IUserRepository {
      void insertUser(User user) throws SQLException;
 
      User selectUser(int id);
