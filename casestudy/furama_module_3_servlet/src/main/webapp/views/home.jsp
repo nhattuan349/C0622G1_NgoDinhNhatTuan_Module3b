@@ -70,7 +70,7 @@
                                 <a class="nav-link dropdown-toggle float-end" href="#" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="float-end"><a class="text-decoration-none"
-                                                               href="/banhang">Customer</a></span>
+                                                               href="/customer">Customer</a></span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" href="#">Action</a></li>
