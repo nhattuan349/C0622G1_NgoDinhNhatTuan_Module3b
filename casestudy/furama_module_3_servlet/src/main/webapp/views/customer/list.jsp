@@ -120,9 +120,10 @@
                 </div>
             </div>
             <div class="col-3">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                <form action="/customer" class="d-flex">
+                    <input class="form-control me-2" type="text" name="name" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit" name="action" value="findByName">Search
+                    </button>
                 </form>
 
             </div>
@@ -130,10 +131,12 @@
         </nav>
     </div>
 
-    <div class="row">
-        <button type="button" class="btn btn bg-success">
+    <div class="row d-flex">
+        <span>
+           <button type="button" class="btn btn bg-success">
             <a class="text-decoration-underline text-white" href="customer?action=create">Add</a>
-        </button>
+           </button>
+        </span>
     </div>
     <div class="row">
         <table id="tableStudent" class="table table-striped table-bordered" style="width:100%">
@@ -168,11 +171,11 @@
                     <td><c:out value="${customer.name}"/></td>
                     <td><c:out value="${customer.dateOfbirth}"/></td>
                     <td>
-                        <c:if test = "${customer.gender==1}">
-                            <span value ="1" >Nam</span>
+                        <c:if test="${customer.gender==1}">
+                            <span value="1">Nam</span>
                         </c:if>
-                        <c:if test = "${customer.gender==0}">
-                        <span value ="0" >Nữ</span>
+                        <c:if test="${customer.gender==0}">
+                            <span value="0">Nữ</span>
                         </c:if>
                     </td>
                     <td><c:out value="${customer.idCard}"/></td>
@@ -180,17 +183,51 @@
                     <td><c:out value="${customer.email}"/></td>
                     <td><c:out value="${customer.address}"/></td>
                     <td>
-                        <a href="/customer?action=edit&id=${customer.id}">Edit</a>
+                        <a href="/customer?action=edit&id=${customer.id}">
+                            <button class="btn bg-warning text-white">
+                                Edit
+                            </button>
+                        </a>
                     </td>
                     <td>
-                        <a href="/customer?action=delete&id=${customer.id}">Delete</a>
+                        <button type="button" onclick="showInfo('${customer.id}','${customer.name}')"
+                                class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Delete
+                        </button>
                     </td>
+
+
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </div>
+
+
 </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/customer">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="deleteId" name="id" hidden>
+                    <input type="text" id="delete" name="action" value="delete" hidden>
+                    <span>Bạn có muốn xóa sinh viên</span><span id="deleteName"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 <script src="../../jquery/jquery-3.5.1.min.js"></script>
 <script src="../../datatables/js/jquery.dataTables.min.js"></script>
@@ -205,6 +242,12 @@
             })
         }
     )
+</script>
+<script>
+    function showInfo(id, name) {
+        document.getElementById("deleteName").innerText = name;
+        document.getElementById("deleteId").value = id;
+    }
 </script>
 </body>
 </html>

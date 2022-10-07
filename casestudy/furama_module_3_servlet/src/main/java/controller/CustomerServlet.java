@@ -37,8 +37,9 @@ public class CustomerServlet extends HttpServlet {
             case "delete":
                 deleteCustomer(request, response);
                 break;
-//                case "findByName":
-//                    findByName(request, response);
+            case "findByName":
+                findByName(request, response);
+                break;
             default:
                 listCustomer(request, response);
                 break;
@@ -61,7 +62,25 @@ public class CustomerServlet extends HttpServlet {
                 updateUser(request, response);
                 break;
         }
+    }
 
+    private void findByName(HttpServletRequest request, HttpServletResponse response) {
+        String name = request.getParameter("name");
+
+        List<Customer> customers = customerService.findByName(name == null ? "":name);
+        request.setAttribute("listCustomer", customers);
+
+        List<CustomerType> listCustomerType = customerTypeService.selectAllCustomerType();
+        request.setAttribute("listCustomerType", listCustomerType);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("views/customer/list.jsp");
+        try {
+            dispatcher.forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void deleteCustomer(HttpServletRequest request, HttpServletResponse response) {
@@ -71,11 +90,7 @@ public class CustomerServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try {
-            response.sendRedirect("/customer");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        listCustomer(request, response);
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response) {

@@ -127,90 +127,70 @@
 
         </nav>
     </div>
-    <div>
-        <h1>Edit Customer</h1>
-        <h2><a href="/customer">List Customer</a></h2>
+    <div style="margin: 0px auto;text-align: center">
+        <h2><a href="/customer"><button class="btn btn-outline-light" style="background: url(/images/slide_h9.jpg)">List Customer</button></a></h2>
     </div>
-    <div>
+    <div class="row" style="width: 100%;margin: 0px auto;background: url(/images/slide_h7.jpg)">
+      <div class="row" style="width: 500px;margin-top:200px;margin-left:400px;background: white">
         <form method="post">
-            <table>
-                <caption><h2>Edit Customer</h2></caption>
+            <%--            <fieldset disabled>--%>
+            <legend>Edit Customer</legend>
+            <div>
                 <c:if test="${customer != null}">
                     <input type="hidden" name="id" value="<c:out value='${customer.id}' />"/>
                 </c:if>
-                <tr>
-                    <th>Customer Type Id:</th>
-                    <td>
-                        <input type="text" name="customerTypeId" size="45"
-                               value="<c:out value='${customer.customerTypeId}' />"
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Name:</th>
-                    <td>
-                        <input type="text" name="name" size="45"
-                               value="<c:out value='${customer.name}' />"
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Date of birth:</th>
-                    <td>
-                        <input type="text" name="dateOfbirth" size="45"
-                               value="<c:out value='${customer.dateOfbirth}' />"
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <th>gender:</th>
-                    <td>
-                        <input type="text" name="gender" size="45"
-                               value="<c:out value='${customer.gender}' />"
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Id Card:</th>
-                    <td>
-                        <input type="text" name="idCard" size="45"
-                               value="<c:out value='${customer.idCard}' />"
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Phone Number:</th>
-                    <td>
-                        <input type="text" name="phoneNumber" size="45"
-                               value="<c:out value='${customer.phoneNumber}' />"
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <th>email:</th>
-                    <td>
-                        <input type="text" name="email" size="45"
-                               value="<c:out value='${customer.email}' />"
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <th>address:</th>
-                    <td>
-                        <input type="text" name="address" size="45"
-                               value="<c:out value='${customer.address}' />"
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type="submit" value="Save"/>
-                    </td>
-                </tr>
-            </table>
-
-
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Customer Type Id</label>
+                <input type="text" class="form-control" placeholder="Disabled input"
+                       name="customerTypeId" size="45"
+                       value="<c:out value='${customer.customerTypeId}'/>"/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" placeholder="Disabled input"
+                       name="name" size="45"
+                       value="<c:out value='${customer.name}'/>"/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Date of birth</label>
+                <input type="text" class="form-control" placeholder="Disabled input"
+                       name="dateOfbirth" size="45"
+                       value="<c:out value='${customer.dateOfbirth}'/>"/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Gender</label>
+                <input type="text" class="form-control" placeholder="Disabled input"
+                       name="gender" size="45"
+                       value="<c:out value='${customer.gender}'/>"/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Id Card</label>
+                <input type="text" class="form-control" placeholder="Disabled input"
+                       name="idCard" size="45"
+                       value="<c:out value='${customer.idCard}'/>"/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input type="text" class="form-control" placeholder="Disabled input"
+                       name="phoneNumber" size="45"
+                       value="<c:out value='${customer.phoneNumber}'/>"/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">email</label>
+                <input type="text" class="form-control" placeholder="Disabled input"
+                       name="email" size="45"
+                       value="<c:out value='${customer.email}'/>"/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">address</label>
+                <input type="text" class="form-control" placeholder="Disabled input"
+                       name="address" size="45"
+                       value="<c:out value='${customer.address}'/>"/>
+            </div>
+            <button type="submit" class="btn btn-primary" type="submit">Save</button>
         </form>
+      </div>
 
     </div>
 

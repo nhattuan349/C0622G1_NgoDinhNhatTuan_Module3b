@@ -18,7 +18,10 @@ public class CustomerRepository implements ICustomerRepository {
     private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customer(customer_type_id,name,date_of_birth,gender,id_card,phone_number,email,address) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
     private static final String SELECT_CUSTOMER_BY_ID = "select *from customer where id =?";
     private static final String UPDATE_CUSTOMER_SQL = "update customer set customer_type_id = ?,name= ?, date_of_birth= ?, gender= ?, id_card= ?, phone_number= ?, email  =? , address  =?  where id = ?;";
-    private static final String DELETE_CUSTOMER_SQL = "delete from customer where id = ?;";
+    private static final String DELETE_CUSTOMER_SQL = "delete from customer where id = ? ;";
+    private static final String SEARCH_CUSTOMER_BY_NAME = "SELECT * FROM customer where name like ? ";
+
+
     @Override
     public void insertCustomer(Customer customer) throws SQLException {
         Connection connection = BaseRepository.getConnectDB();
@@ -114,14 +117,42 @@ public class CustomerRepository implements ICustomerRepository {
 
     @Override
     public boolean deleteCustomer(int id) throws SQLException {
+
         boolean rowDeleted;
         try (Connection connection = BaseRepository.getConnectDB();
              PreparedStatement statement = connection.prepareStatement(DELETE_CUSTOMER_SQL);) {
             statement.setInt(1, id);
-            return statement.executeUpdate() >= 1;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            rowDeleted = statement.executeUpdate() > 0;
         }
-        return false;
+        return rowDeleted;
+    }
+//
+    @Override
+    public List<Customer> findByName(String nameCustomer) {
+        List<Customer> customers = new ArrayList<>();
+
+            Connection connection = BaseRepository.getConnectDB();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(SEARCH_CUSTOMER_BY_NAME);
+            preparedStatement.setString(1,nameCustomer);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int customerTypeId = rs.getInt("customer_type_id");
+                String name = rs.getString("name");
+                String dateOfbirth = rs.getString("date_of_birth");
+                int gender = rs.getInt("gender");
+                String idCard = rs.getString("id_card");
+                String phoneNumber = rs.getString("phone_number");
+                String email = rs.getString("email");
+                String address = rs.getString("address");
+
+                customers.add(new Customer(id, customerTypeId,name,dateOfbirth,gender,idCard,phoneNumber,email,address));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customers;
     }
 }

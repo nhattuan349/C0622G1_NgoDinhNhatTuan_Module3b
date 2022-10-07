@@ -46,13 +46,13 @@ phone_number varchar(45),
 email varchar(45),
 address varchar(45),
 position_id int,
-foreign key (position_id) references `position`(id),
+foreign key (position_id) references `position`(id)on delete set null,
 education_degree_id int,
-foreign key (education_degree_id) references education_degree(id),
+foreign key (education_degree_id) references education_degree(id)on delete set null,
 division_id int,
-foreign key (division_id) references division(id),
+foreign key (division_id) references division(id)on delete set null,
 username varchar(255),
-foreign key (username) references user(username)
+foreign key (username) references user(username)on delete set null
 );
 
 create table customer_type(
@@ -63,7 +63,7 @@ name varchar(45)
 create table customer(
 id int primary key auto_increment,
 customer_type_id int,
-foreign key (customer_type_id) references customer_type(id),
+foreign key (customer_type_id) references customer_type(id)on delete set null,
 name varchar(45),
 date_of_birth date,
 gender bit(1),
@@ -89,9 +89,9 @@ area int,
 cost double,
 max_people int,
 rent_type_id int,
-foreign key (rent_type_id) references rent_type(id),
+foreign key (rent_type_id) references rent_type(id)on delete set null,
 facility_type_id int,
-foreign key (facility_type_id) references facility_type(id),
+foreign key (facility_type_id) references facility_type(id)on delete set null,
 standard_room varchar(45),
 description_other_convenience varchar(45),
 pool_area double,
@@ -105,11 +105,11 @@ start_date datetime,
 end_date datetime,
 deposit double,
 employee_id int,
-foreign key (employee_id) references employee(id),
+foreign key (employee_id) references employee(id)on delete set null,
 customer_id int,
-foreign key (customer_id) references customer(id),
+foreign key (customer_id) references customer(id)on delete set null,
 facility_id int,
-foreign key (facility_id) references facility(id)
+foreign key (facility_id) references facility(id)on delete set null
 );
 
 create table attach_facility(
@@ -123,9 +123,9 @@ status varchar(45)
 create table contract_detail(
 id int primary key auto_increment,
 contract_id int,
-foreign key (contract_id) references contract(id),
+foreign key (contract_id) references contract(id)on delete set null,
 attach_facility_id int,
-foreign key (attach_facility_id) references attach_facility(id),
+foreign key (attach_facility_id) references attach_facility(id)on delete set null,
 quantity int
 );
 
@@ -264,4 +264,6 @@ values (1,5,2,4),
 (7,2,1,2),
 (8,2,1,2);
 
-
+-- SET FOREIGN_KEY_CHECKS = 1;
+-- select * from customer;
+-- delete from customer where id = 3; 
